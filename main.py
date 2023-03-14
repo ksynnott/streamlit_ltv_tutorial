@@ -59,11 +59,11 @@ def streamlit_LTV_tutorial(LTV_file, CAC, markdown_style, client_name):
 
 
     with dataset:
-        st.header('Tracer x Shopify Data')
-        st.text('This dataset is from the Shopify x Tracer integration looking at customer orders in Tracer')
+        st.header('Tracer x eCommerce Data')
+        #st.text('This dataset is from the Shopify x Tracer integration looking at customer orders in Tracer')
 
         LTV_data, LTV_vis = get_data(LTV_file)
-        st.write(LTV_vis.tail(100))
+        #st.write(LTV_vis.tail(100))
 
 
 
