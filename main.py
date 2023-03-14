@@ -99,7 +99,7 @@ def streamlit_LTV_tutorial(LTV_file, CAC, markdown_style, client_name):
             paper_bgcolor="#fffff0",)
 
         fig.update_yaxes(title='Lifetime Value')
-        fig.update_xaxes(title='Daily')
+        fig.update_xaxes(title='Monthly')
 
         fig.add_hline(y=LTV_chosen, line_dash="dash", line_color="green")
 
