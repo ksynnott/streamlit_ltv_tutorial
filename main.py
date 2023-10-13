@@ -74,7 +74,7 @@ def streamlit_LTV_tutorial(LTV_file, CAC, markdown_style, client_name):
 
         sel_col, disp_col = st.columns(2)
 
-        LTV_month = sel_col.slider('Select the time frame you wish to look at LTV (months)', min_value=int(LTV_vis['day_diff_months'].min()), max_value=int(LTV_vis['day_diff_months'].max()), value=12, step=1)
+        LTV_month = sel_col.slider('Select the time frame you wish to look at LTV (in months)', min_value=int(LTV_vis['day_diff_months'].min()), max_value=int(LTV_vis['day_diff_months'].max()), value=12, step=1)
 
         LTV_chosen = round(LTV_vis[LTV_vis['day_diff_months'] == LTV_month]['LTV'].values[0],2)
 
