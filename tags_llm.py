@@ -1,15 +1,15 @@
 import requests
 import json
 import csv
-import boto3
 import time
 import streamlit as st
 from datetime import datetime, timedelta
 from openai import OpenAI
 
 import os
-KEY = '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'
-ass_id = 'asst_06yKMUj9FAyN4cAxP513ppO7'
+
+KEY = st.secrets["API_KEY"]
+ASSISTANT = st.secrets["ASSISTANT"]
 
 def tags_llm(thread, campaign_name, guess):
 
