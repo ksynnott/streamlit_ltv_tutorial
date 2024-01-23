@@ -21,7 +21,7 @@ def tags_llm(thread, campaign_name, guess):
     
     run = client.beta.threads.runs.create(
         thread_id = thread.id,
-        assistant_id = ass_id
+        assistant_id = ASSISTANT
     )
 
     run1 = client.beta.threads.runs.retrieve(
