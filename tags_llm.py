@@ -76,7 +76,7 @@ if __name__ == "__main__":
     # Create 4 containers for each pair of dropdown and response box
     for i in range(4):
         with st.container():
-            col1, col2 = st.columns([2, 3], gap="small")  # Adjust the width ratio and gap as needed
+            col1, col2 = st.columns([2, 3])  # Adjust the width ratio and gap as needed
             with col1:
                 # Create a dropdown for each output
                 dropdown_selections.append(st.selectbox(f'Option {i+1}', tag_options, key=f'dropdown_{i}'))
