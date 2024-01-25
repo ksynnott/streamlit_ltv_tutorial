@@ -8,6 +8,12 @@ from openai import OpenAI
 
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
+
+#KEY = os.environ.get("API_KEY")
+#ASSISTANT = os.environ.get("ASSISTANT")
+
 KEY = st.secrets["API_KEY"]
 ASSISTANT = st.secrets["ASSISTANT"]
 
@@ -40,9 +46,20 @@ def tags_llm(thread, campaign_name, guess):
 # Function to simulate processing and updating response boxes
 def process_data(thread, campaign_name, selections):
     # This is a placeholder for your actual processing logic
-    guess = tags_llm(thread, campaign_name, guess = selections)
+    tag_and_rule = tags_llm(thread, campaign_name, guess = selections)
+    starts_with_brace = tag_and_rule.startswith("{")
+    ends_with_brace = tag_and_rule.endswith("}")
+
+    guess = ''
+    tag = 'Not Applicable'
+
+    if starts_with_brace and ends_with_brace:
+        clean_tag_and_rule = tag_and_rule.strip('{}').split(', ')
+        guess = clean_tag_and_rule[0]
+        tag = clean_tag_and_rule[1]
+
     results = f"Tag as \n \n \n {guess}"
-    return results
+    return results, guess, tag
 
 if __name__ == "__main__":
     client = OpenAI(api_key=KEY)
@@ -68,6 +85,7 @@ if __name__ == "__main__":
 
     # Initialize a dictionary to hold the response placeholders
     responses = {}
+    tag_rule = []
 
     # Initialize a list to hold the dropdown selections and response texts
     dropdown_selections = []
@@ -90,8 +108,46 @@ if __name__ == "__main__":
         # Iterate over the dropdown selections and update the responses
         for i, selection in enumerate(dropdown_selections):
             # Simulate processing and get result
-            result = process_data(thread, campaign_name, selection)
+            result, guess, tag = process_data(thread, campaign_name, selection)
             progress_bar.progress((i + 1) * 25)  # Update progress bar by 25% each iteration
             
             # Update the response text using markdown with custom styling for vertical centering
             response_texts[i].markdown(f"<div style='text-align: left; vertical-align: bottom;'>{result}</div>", unsafe_allow_html=True)
+            
+            if guess != '':
+                tag_rule.append((guess, tag))
+
+        # Dynamic creation of sections based on the length of the sample_list
+        # Create a row of columns based on the sample_list
+        st.header("How it would look in Tracer") 
+        columns = st.columns(len(tag_rule))
+        for i, (guess, tag) in enumerate(tag_rule, start=0):
+            with columns[i]:
+                #st.text_input("Field", value="campaign name", key=f'field_{i}')
+                #st.text_input("Type", value="Contains", key=f'type_{i}')
+                #st.text_input("Contains", value=guess, key=f'contains_{i}')
+                #st.text_input("Tag As", value=guess, key=f'tag_{i}')
+
+                st.markdown(f"""
+                    <style>
+                        .box{i} {{
+                            border: 2px solid #ccc;
+                            border-radius: 5px;
+                            padding: 10px;
+                            margin-bottom: 10px;
+                        }}
+                        .box{i} h1 {{
+                            margin-top: 0;
+                            font-size: 20px; /* Smaller font size for h1 */
+                        }}
+                    </style>
+                    <div class="box{i}">
+                        <h1>Tracer Rule {i+1}</h1>
+                        Field: <input type="text" value="campaign name" style="width: 100%;" /><br>
+                        Type: <input type="text" value="Contains" style="width: 100%;" /><br>
+                        Contains: <input type="text" value="{tag}" style="width: 100%;" /><br>
+                        Tag As: <input type="text" value="{guess}" style="width: 100%;" /><br>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            
