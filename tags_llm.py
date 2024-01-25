@@ -8,8 +8,7 @@ from openai import OpenAI
 
 import os
 
-from dotenv import load_dotenv
-
+#from dotenv import load_dotenv
 #load_dotenv()
 #KEY = os.environ.get("API_KEY")
 #ASSISTANT = os.environ.get("ASSISTANT")
