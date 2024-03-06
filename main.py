@@ -1,4 +1,4 @@
-import imp
+import importlib
 import streamlit as st
 import pandas as pd
 import datetime
@@ -11,7 +11,8 @@ st.markdown(
     """
     <style>
     .main {
-    background-color: #fffff0
+    background-color: #2a6d59
+    color: red;
     }
     <style>
     """,
@@ -30,7 +31,7 @@ def streamlit_LTV_tutorial(LTV_file, CAC, markdown_style, client_name):
     dataset = st.container()
     LTV_visualisation = st.container()
 
-    @st.cache
+    @st.cache_data
     def get_data(filename):
         LTV_data = pd.read_csv(filename)
 
@@ -96,7 +97,8 @@ def streamlit_LTV_tutorial(LTV_file, CAC, markdown_style, client_name):
             height=300,
             margin=dict(l=1, r=1, b=1, t=1),
             font=dict(color="#383635",size=15),
-            paper_bgcolor="#fffff0",)
+            plot_bgcolor='rgba(245, 245, 245, 1)',
+            paper_bgcolor="#2a6d59",)
 
         fig.update_yaxes(title='Lifetime Value')
         fig.update_xaxes(title='Monthly')
