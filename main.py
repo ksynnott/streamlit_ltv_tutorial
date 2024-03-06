@@ -31,7 +31,7 @@ def streamlit_LTV_tutorial(LTV_file, CAC, markdown_style, client_name):
     dataset = st.container()
     LTV_visualisation = st.container()
 
-    @st.cache_data
+    @st.cache
     def get_data(filename):
         LTV_data = pd.read_csv(filename)
 
