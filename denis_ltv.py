@@ -17,6 +17,6 @@ markdown_vals = """
     <style>
     """
 
-file = '~/src/streamlit/streamlit_ltv_tutorial/data/LTV_DenisErwin.csv'
+file = 'data/LTV_DenisErwin.csv'
 
 streamlit_LTV_tutorial(file, CAC, markdown_vals, client)
